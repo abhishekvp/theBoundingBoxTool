@@ -2,14 +2,21 @@
 <title>Bounding Box</title>
 <head>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+ <link 
+        rel="stylesheet" 
+        href="leaflet.draw.css"
+    />
+
+ <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.7/leaflet.draw.js"></script>
+
 <style>
 #mapid { height: 500px; }
 </style>
 </head>
 <body>
  <div id="mapid"></div>
-</body>
- <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 <script>
 
 
@@ -18,7 +25,49 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18
 }).addTo(mymap);
+/*
+mymap.on('click', onMapClick);
+function onMapClick(e) {
+   alert("You clicked the map at " + e.latlng);
+}
+*/
+ var drawnItems = new L.FeatureGroup();
+ mymap.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+draw: {
+	rect: {
+					shapeOptions: {
+						color: 'green'
+					}
+},
+circle: false,
+polyline: false,
+polygon: false,
+marker: false
+},
+            edit: {
+                featureGroup: drawnItems
+            }
+        });
+        mymap.addControl(drawControl);
+
+        mymap.on('draw:created', function (e) {
+            var type = e.layerType,
+                layer = e.layer;
+    if (type === 'rectangle') {
+        layer.on('mouseover', function() {
+            alert(layer.getLatLngs());    
+        });
+    }
+            drawnItems.addLayer(layer);
+        });
+
 </script>
+</body>
+
+
+
 
 
 </html>
