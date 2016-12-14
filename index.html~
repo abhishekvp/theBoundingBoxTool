@@ -76,7 +76,7 @@ console.log(bb);
 
 mymap.on('mousemove', function(e) {
     var currLatLon = document.getElementById("mouseLatLon");
-    currLatLon.innerHTML = "&nbsp;&nbsp;Mouse Position:<br>&nbsp;&nbsp;Lat: " + e.latlng.lat + ", Lon: " + e.latlng.lng;
+    currLatLon.innerHTML = "&nbsp;Mouse Position:<br>&nbsp;&nbsp;Lat: " + e.latlng.lat + ", Lon: " + e.latlng.lng;
 });
 
 L.Control.RemoveAll = L.Control.extend(
